@@ -13,10 +13,13 @@ public class EmpregadoDAO {
 			stmt.setString(2, emp.getApelido());
 			stmt.setDouble(3, emp.getSalario());
 			stmt.setDate(4, emp.getDataNascimento());
-			stmt.setInt(5, emp.getDepartamento().getCodDepartamento());
+			stmt.setInt(5, 1/*emp.getDepartamento().getCodDepartamento()*/);
+			stmt.executeUpdate();
 			IO.println("Empregado inserido com sucesso!");
 		}catch(SQLException s){
 			throw new DbException(s.getMessage());
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 		
 	}
