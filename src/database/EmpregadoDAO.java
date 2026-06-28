@@ -3,6 +3,7 @@ import exception.DbException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import model.Empregado;
 
 public class EmpregadoDAO {
@@ -22,5 +23,15 @@ public class EmpregadoDAO {
 			e.printStackTrace();
 		}
 		
+	}
+	public ArrayList<Empregado> listar(){
+		ArrayList<Empregado> lista = new ArrayList<>();
+		String sql = "select * from empregado";
+		try(Connection conn = DataBase.getConnection();PreparedStatement stmt = conn.prepareStatement(sql);ResultSet rs = stmt.executeQuery()){
+			
+		}catch(SQLException e){
+			
+		}
+		return lista;
 	}
 }

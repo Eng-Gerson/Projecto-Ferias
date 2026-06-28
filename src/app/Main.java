@@ -1,4 +1,4 @@
-import Menu.MenuPrincipal;
+import menu.MenuPrincipal;
 public class Main{
 	public static void main(String[] args)throws Exception{
 		MenuPrincipal.exibir();
