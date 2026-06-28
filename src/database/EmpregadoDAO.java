@@ -2,8 +2,10 @@ package database;
 import exception.DbException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import model.Departamento;
 import model.Empregado;
 
 public class EmpregadoDAO {
@@ -24,13 +26,15 @@ public class EmpregadoDAO {
 		}
 		
 	}
-	public ArrayList<Empregado> listar(){
+	public ArrayList<Empregado> listar()throws Exception{
 		ArrayList<Empregado> lista = new ArrayList<>();
-		String sql = "select * from empregado";
+		String sql = "select * from empregado inner join departamento where empregado.codDepartamento = departamento.codDepartamento order by codEmpregado";
 		try(Connection conn = DataBase.getConnection();PreparedStatement stmt = conn.prepareStatement(sql);ResultSet rs = stmt.executeQuery()){
-			
-		}catch(SQLException e){
-			
+			while(rs.next()){
+				lista.add(new Empregado(rs.getInt("codEmpregado"),rs.getString("nome"),rs.getString("apelido"),rs.getDouble("salario"),rs.getDate("dataNascimento"),new Departamento(rs.getInt("codDepartamento"),rs.getString("departamento.nome"))));
+		}
+	}catch(SQLException e){
+			throw new DbException(e.getMessage());
 		}
 		return lista;
 	}

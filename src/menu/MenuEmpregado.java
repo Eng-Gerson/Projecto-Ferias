@@ -1,7 +1,8 @@
-package Menu;
+package menu;
 import database.EmpregadoDAO;
 import input.Input;
 import java.sql.Date;
+import java.util.ArrayList;
 import model.*;
 public class MenuEmpregado {
 	private static final EmpregadoDAO emp = new EmpregadoDAO();
@@ -32,8 +33,11 @@ public class MenuEmpregado {
 		
 	}
 
-	private static void Listar() {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	private static void Listar()throws Exception{
+		ArrayList<Empregado> listagem = emp.listar();
+		for(Empregado e : listagem){
+			IO.println(e.toString());
+		}
 	}
 	
 }

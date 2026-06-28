@@ -1,4 +1,4 @@
-package Menu;
+package menu;
 import input.Input;
 public class MenuPrincipal {
 	private static int op;

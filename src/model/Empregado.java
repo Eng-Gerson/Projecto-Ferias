@@ -72,5 +72,10 @@ public class Empregado {
 		this.departamento = departamento;
 	}
 
+	@Override
+	public String toString() {
+		return  "CodEmpregado: " + codEmpregado + " Nome:" + nome + " Apelido:" + apelido + " Salário:" + salario + " DataNascimento:" + dataNascimento + " Departamento: "+ departamento.getNome();
+	}
+
 	
 }

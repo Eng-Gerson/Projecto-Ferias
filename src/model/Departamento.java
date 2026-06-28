@@ -31,5 +31,11 @@ public class Departamento {
 	public void adicionarEmpregado(Empregado e){
 		empregado.add(e);
 	}
+
+	@Override
+	public String toString() {
+		return " codDepartamento: " + codDepartamento + " nome:" + nome;
+	}
+	
 	
 }
