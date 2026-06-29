@@ -15,7 +15,7 @@ public class EmpregadoDAO {
 			stmt.setString(2, emp.getApelido());
 			stmt.setDouble(3, emp.getSalario());
 			stmt.setDate(4, emp.getDataNascimento());
-			stmt.setInt(5, 1/*emp.getDepartamento().getCodDepartamento()*/);
+			stmt.setInt(5, emp.getDepartamento().getCodDepartamento());
 			stmt.executeUpdate();
 			IO.println("Empregado inserido com sucesso!");
 		}catch(SQLException s){
@@ -66,6 +66,27 @@ public class EmpregadoDAO {
 		} catch(SQLException s){
 			throw new DbException("Erro ao remover o empregado: "+s.getMessage());
 		}
+	}
+	public void update(int id,Empregado emp)throws DbException{
+		String sql = "Update empregado set nome = ?,apelido = ?,salario = ?,dataNascimento = ?,codDepartamento = ? where codEmpregado = ? ";
+		try(Connection conn = DataBase.getConnection();PreparedStatement stmt = conn.prepareStatement(sql)){
+			stmt.setString(1, emp.getNome());
+			stmt.setString(2, emp.getApelido());
+			stmt.setDouble(3, emp.getSalario());
+			stmt.setDate(4, emp.getDataNascimento());
+			stmt.setInt(5, emp.getDepartamento().getCodDepartamento());
+			stmt.setInt(6,id);
+			int linhas = stmt.executeUpdate();
+			if(linhas > 0){
+				IO.println("Empregado actualizado com sucesso!");
+			} else {
+				IO.println("Empregado não achado");
+			}
+		}catch(SQLException s){
+			throw new DbException(s.getMessage());
+		}catch(Exception e){
+			throw new DbException("Erro: "+e.getMessage());
+		}	
 	}
 	
 }

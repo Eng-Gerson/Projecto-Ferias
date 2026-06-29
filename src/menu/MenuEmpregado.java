@@ -32,7 +32,7 @@ public class MenuEmpregado {
 		Double salario = io.enterDouble("Insira o salário");
 		String dt = io.enterString("Insira a data de Nascimento  \"aaaa-mm-dd\"");
 		Date data =  Date.valueOf(dt);
-		Departamento dep = new Departamento(1,"TI");
+		Departamento dep = new Departamento(1,"TI"); //TODO usar DepartamentoDAO
 		emp.add(new Empregado(nome,apelido,salario,data,dep));
 		
 	}
@@ -53,7 +53,14 @@ public class MenuEmpregado {
 		}
 	}
 
-	private static void Actualizar() {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	private static void Actualizar()throws Exception{
+		int id = io.enterInt("Insira o id do funcionário  a ser actualizado");
+		String nome = io.enterString("Insira o 1º nome");
+		String apelido = io.enterString("Insira o apelido");
+		Double salario = io.enterDouble("Insira o salário");
+		String dt = io.enterString("Insira a data de Nascimento  \"aaaa-mm-dd\"");
+		Date data =  Date.valueOf(dt);
+		Departamento dep = new Departamento(1,"TI"); //TODO usar DepartamentoDAO
+		emp.update(id, new Empregado(nome,apelido,salario,data,dep));
 	}
 }
