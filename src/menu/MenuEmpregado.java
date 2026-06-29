@@ -21,8 +21,9 @@ public class MenuEmpregado {
 		}
 	}
 
-	private static void Remover() {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	private static void Remover()throws Exception{
+		int id = io.enterInt("Insira o id do empregado a ser removido");
+		emp.remover(id);
 	}
 
 	private static void Inserir()throws Exception{

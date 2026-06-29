@@ -53,5 +53,19 @@ public class EmpregadoDAO {
 		}
 	return null;
 	}
+	public void remover(int id)throws DbException{
+		String sql = "Delete from empregado where codEmpregado = ?";
+		try(Connection conn = DataBase.getConnection();PreparedStatement stmt = conn.prepareStatement(sql)){
+			stmt.setInt(1,id);
+			int linhas = stmt.executeUpdate();
+			if(linhas > 0){
+				System.out.println("Empregado removido com sucesso!");
+			} else {
+				System.out.println("Empregado não encontrado");
+			}
+		} catch(SQLException s){
+			throw new DbException("Erro ao remover o empregado: "+s.getMessage());
+		}
+	}
 	
 }
