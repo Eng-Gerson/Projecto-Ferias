@@ -5,8 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import model.Departamento;
-import model.Empregado;
+import model.*;
 
 public class EmpregadoDAO {
 	public void add(Empregado emp)throws Exception{
@@ -22,20 +21,37 @@ public class EmpregadoDAO {
 		}catch(SQLException s){
 			throw new DbException(s.getMessage());
 		}catch(Exception e){
-			e.printStackTrace();
+			throw new DbException("Erro: "+e.getMessage());
 		}
 		
 	}
-	public ArrayList<Empregado> listar()throws Exception{
+	
+	public ArrayList<Empregado> listar()throws DbException{
 		ArrayList<Empregado> lista = new ArrayList<>();
-		String sql = "select * from empregado inner join departamento where empregado.codDepartamento = departamento.codDepartamento order by codEmpregado";
+		String sql = "select empregado.*, departamento.nome as nomeDepartamento from empregado inner join departamento on empregado.codDepartamento = departamento.codDepartamento order by codEmpregado";
 		try(Connection conn = DataBase.getConnection();PreparedStatement stmt = conn.prepareStatement(sql);ResultSet rs = stmt.executeQuery()){
 			while(rs.next()){
-				lista.add(new Empregado(rs.getInt("codEmpregado"),rs.getString("nome"),rs.getString("apelido"),rs.getDouble("salario"),rs.getDate("dataNascimento"),new Departamento(rs.getInt("codDepartamento"),rs.getString("departamento.nome"))));
+				lista.add(new Empregado(rs.getInt("codEmpregado"),rs.getString("nome"),rs.getString("apelido"),rs.getDouble("salario"),rs.getDate("dataNascimento"),new Departamento(rs.getInt("codDepartamento"),rs.getString("nomeDepartamento"))));
 		}
 	}catch(SQLException e){
-			throw new DbException(e.getMessage());
+			throw new DbException("Erro:"+e.getMessage());
 		}
 		return lista;
 	}
+	public Empregado BuscarId(int id)throws Exception{
+		String sql = "select empregado.*, departamento.nome as nomeDepartamento from empregado inner join departamento on empregado.codDepartamento = departamento.codDepartamento where codEmpregado = ?";
+		try(Connection conn = DataBase.getConnection();PreparedStatement stmt = conn.prepareStatement(sql)
+){
+			stmt.setInt(1,id);
+			try(ResultSet rs = stmt.executeQuery()){
+				if(rs.next()){
+				return new Empregado(rs.getInt("codEmpregado"),rs.getString("nome"),rs.getString("apelido"),rs.getDouble("salario"),rs.getDate("dataNascimento"),new Departamento(rs.getInt("codDepartamento"),rs.getString("nomeDepartamento")));
+			}
+		}
+		}catch(SQLException s){
+			throw new DbException(s.getMessage());
+		}
+	return null;
+	}
+	
 }

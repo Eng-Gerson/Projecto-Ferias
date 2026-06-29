@@ -1,5 +1,6 @@
 package menu;
 import database.EmpregadoDAO;
+import exception.DbException;
 import input.Input;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -9,11 +10,13 @@ public class MenuEmpregado {
 	private static Input io = new Input();
 	private static int op;
 	public static void exibir()throws Exception {
-		op = io.enterInt("----- Empregado ----- \n1-Adicionar \n2-Remover \n3-Listar");
+		op = io.enterInt("----- Empregado ----- \n1-Adicionar \n2-Remover \n3-Listar \n4-Buscar Empregado \n5-Actualizar \nOutro - Sair");
 		switch(op){
 			case 1: Inserir();break;
 			case 2: Remover();break;
 			case 3: Listar();break;
+			case 4: Buscar();break;
+			case 5: Actualizar();break;
 			default: IO.print("Está Nice");break;
 		}
 	}
@@ -33,11 +36,23 @@ public class MenuEmpregado {
 		
 	}
 
-	private static void Listar()throws Exception{
+	private static void Listar()throws DbException{
 		ArrayList<Empregado> listagem = emp.listar();
 		for(Empregado e : listagem){
 			IO.println(e.toString());
 		}
 	}
-	
+	public static void Buscar()throws Exception{
+		int id = io.enterInt("Insira o id do empregado");
+		Empregado empregado = emp.BuscarId(id);
+		if(empregado == null){
+			System.out.println("O empregado não existe!");
+		} else {
+			IO.println(empregado.toString());
+		}
+	}
+
+	private static void Actualizar() {
+		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	}
 }
